@@ -1,8 +1,10 @@
 # Upload Blob File to Azure
 
-## This is a little project to upload a blob file in Azure
+## _This is a little project to upload a blob file in Azure_
 
 ### How to run?
+
+> Note: before run set the env vars in the .env file, required for authentication with the Azure Storage Account.
 
 ```bash
   python3 main.py
@@ -10,11 +12,11 @@
 
 The script can read 3 args
 
-> -c --container_name  | default **"testcontainer"**
-> -f --file_url  | default **"./data.csv"**
-> -n --file_name  | default **data.csv**
-
-- Path to the file as **./data.csv**
+| Default | short | long | Description |
+| --------|-------|------|-------------|
+| testcontainer | -c | --container_name | The container in the Azure Storage Account |
+| data.csv | -f | --file_url | Path to the file |
+| data.csv | -n | --file_name | Name of the blob,file in the account |
 
 ## List of commands used to get required information
 
