@@ -4,7 +4,7 @@
 
 ### How to run?
 
-> Note: before run set the env vars in the .env file, required for authentication with the Azure Storage Account.
+> [Note: before run set the env vars in the .env file](#list-of-commands-used-to-get-required-information)
 
 ```bash
   python3 main.py
@@ -22,7 +22,7 @@ The script can read 3 args
 
 This assumes that it's already created an Azure Storage Account
 
-> If you don't want to install the Azure CLI you can get all this information in the Azure Portal or Azure Cloud Shell
+> If you don't want to install the Azure CLI you can get the _account storage name_ and _account storage key_ in the Azure Portal or Azure Cloud Shell
 
 get the resources grups list
 
