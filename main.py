@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from azure.storage.blob import ContainerClient, BlobClient
 
 
-def upload_blob(blob_client: BlobClient, file_url="data.csv"):
+def upload_blob(blob_client: BlobClient, file_url: str = "data.csv"):
     try:
         print("Uploading file")
         with open(file_url, "rb") as data:
@@ -21,10 +21,7 @@ def create_blob_client(connection_string: str, container_name: str, file_name: s
     return BlobClient.from_connection_string(conn_str=connection_string, container_name=container_name, blob_name=file_name)
 
 
-def create_container_client(connection_string: str, container_name: str):
-    if not container_name:
-        raise "The container name can't be empty"
-
+def create_container_client(connection_string: str, container_name: str = "testcontainer") -> None:
     print(f'Creating container {container_name}')
 
     container_client = ContainerClient.from_connection_string(
@@ -32,7 +29,11 @@ def create_container_client(connection_string: str, container_name: str):
         container_name=container_name
     )
 
-    container_client.create_container()
+    if not container_client.exists():
+        container_client.create_container()
+        return
+
+    print(f'The container {container_name} already exists')
 
 
 def create_connection_string() -> str:
