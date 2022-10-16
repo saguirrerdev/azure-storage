@@ -7,7 +7,18 @@ from dotenv import load_dotenv
 from azure.storage.blob import ContainerClient, BlobClient
 
 
-def upload_blob(blob_client: BlobClient, file_url: str = "data.csv"):
+def upload_blob(blob_client: BlobClient, file_url: str = "data.csv") -> None:
+    """upload_blob(blob_client: BlobClient, file_url: str = "data.csv") -> None
+
+    Upload the :file_url to the :blob_client
+
+    :blob_client: BlobClient -> BlobClient to manage the file to be uploaded
+
+    :file_url: str -> Path to the file to be uploaded
+
+    Raise a FileNotFoundError if the current :file_url it's no valid
+    """
+
     try:
         print("Uploading file")
         with open(file_url, "rb") as data:
@@ -17,11 +28,33 @@ def upload_blob(blob_client: BlobClient, file_url: str = "data.csv"):
 
 
 def create_blob_client(connection_string: str, container_name: str, file_name: str) -> BlobClient:
+    """create_blob_client(connection_string: str, container_name: str, file_name: str) -> BlobClient
+
+    Creates a new BlobClient
+
+    :connection_string: str -> Azure Storage connection string
+
+    :container_name: str -> Container name where the blop is uploaded
+
+    :file_name: srt -> Name of the blob in the container
+
+    Returns BlobClient    
+    """
+
     print(f'Creating blob client')
     return BlobClient.from_connection_string(conn_str=connection_string, container_name=container_name, blob_name=file_name)
 
 
 def create_container_client(connection_string: str, container_name: str = "testcontainer") -> None:
+    """create_container_client(connection_string: str, container_name: str = "testcontainer") -> None
+
+    :connection_string: str Azure Storage connection string
+
+    :container_name: str Container name to be created in the azure storage account
+
+    Creates or verify if the container with :container_name exists
+    """
+
     print(f'Creating container {container_name}')
 
     container_client = ContainerClient.from_connection_string(
@@ -37,6 +70,15 @@ def create_container_client(connection_string: str, container_name: str = "testc
 
 
 def create_connection_string() -> str:
+    """create_connection_string() -> str
+
+    Reads the env vars
+        - AZURE_STORAGE_ACCOUNT_NAME
+        - AZURE_STORAGE_ACCOUNT_KEY
+
+    Returns azure storage connection string
+    """
+
     print("Creating connection string")
     try:
         storage_account_name = os.environ["AZURE_STORAGE_ACCOUNT_NAME"]
@@ -53,6 +95,18 @@ def create_connection_string() -> str:
 
 
 def read_args() -> List:
+    """read_args() -> List
+
+    Parses command line options and parameters list
+
+    Expect to read the next params:
+        - -c --container_name
+        - -f --file_url
+        - -n --container_name
+
+    Returns a list with [container_name, file_url, file_name]
+    """
+
     try:
         opts, args = getopt.getopt(sys.argv[1:], "c:f:n", [
                                    "container_name=", "file_url=", "file_name="])
